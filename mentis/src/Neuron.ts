@@ -10,15 +10,5 @@ class Neuron {
 		return 0; 
 	}
 
-	private SGD(): void {}
 
-	private randomWeights():void {}
-
-	private sigmoidFunction(): number {
-		return 0;
-	}
-
-	private dotProduct(a: number[], b: number[]): number { 
-		return 0; 
-	}
 }
