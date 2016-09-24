@@ -1,0 +1,20 @@
+Parsed UniProt-GOA data file README
+-----------------------------------
+
+This parsed file is a Tab Separated Value (tsv) file with 4 fields.
+
+List of field:
+-------------
+
+Column No. Content:
+1. UniProtKB Accession
+2. NCBI Taxon ID
+3. Qualifier
+4. GO annotation
+
+Values that may present as a 'Qualifier': NOT, colocalizes_with, contributes_to, NOT|contributes_to, NOT|colocalizes_with.
+
+For the 4th field (GO annotation), each annotation consists of 3 parts: 1) GO term ID; 2) GO namespace (F = Molecular Function; P = Biological Process; C = Cellular Component); 3) Evidence code. These 3 parts are separated by a single comma; e.g. GO:0005525,F,IDA
+
+-------------
+Last modified: 26 Aug 2013

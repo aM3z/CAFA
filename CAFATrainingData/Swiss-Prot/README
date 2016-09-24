@@ -1,0 +1,22 @@
+Parsed UniProt Swiss_Prot data file README
+------------------------------------------
+
+This parsed file is a Tab Separated Value (tsv) file with 4 fields.
+
+List of field:
+-------------
+
+Column No. Content:
+1. UniProtKB ID (1)
+2. NCBI Taxon ID (1)
+3. UniProtKB Accession (1+)
+4. GO annotation (1+)
+
+The number in the parentheses indicate the occurrence of that field. Multiple occurrences are saparated by a semicolon ';'.
+
+For the 4th field (GO annotation), each annotation consists of 3 parts: 1) GO term ID; 2) GO namespace (F = Molecular Function; P = Biological Process; C = Cellular Component); 3) Evidence code. These 3 parts are separated by a single comma; e.g. GO:0005525,F,IDA
+
+As usual, multiple annotations are separated by a semicolon.
+
+-------------
+Last modified: 26 Sep 2013
