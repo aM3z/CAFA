@@ -38,3 +38,13 @@ jspm_packages
 
 # vscode
 .vscode
+/nbproject/private/
+/build/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
