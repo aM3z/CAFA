@@ -7,25 +7,31 @@ package cafa;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
- * Represents a collection of Protein instances from a common FASTA formatted 
+ * Represents a collection of Protein instances from a common FASTA formatted
  * file.
  *
  * @author Miguel Amezola <amezolma@plu.edu>
  */
 public class ProteinCollection {
 
+    // FASTA codes
+    private final char[] CODES = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'X', '*', '-'};
     // loadFile method requires exactly two states for file reading
     private final boolean INSIDE_SEQUENCE = true;
     private final boolean OUTSIDE_SEQUENCE = false;
     // protein sequence list
     private ArrayList<Protein> proteins;
-    // length of longest sequence
+    // protein with the longest sequence
     private Protein longest;
-    // length of shortest sequence
+    // protein with the shortest sequence
     private Protein shortest;
+    // frequency of each amino acid
+    private int[] aminoAcidFreq;
 
     public ProteinCollection(String filePath) {
 
@@ -35,7 +41,11 @@ public class ProteinCollection {
         File f = new File(filePath);
         this.longest = null;
         this.shortest = null;
+        this.aminoAcidFreq = new int[this.CODES.length];
         this.proteins = this.loadFile(f);
+                
+        // for(int i = 0; i < this.CODES.length; i++)
+        //    this.aminoAcidFreq[i] = 0;
     }
 
     /**
@@ -46,22 +56,25 @@ public class ProteinCollection {
     public ArrayList<Protein> getProteins() {
         return proteins;
     }
+
     /**
      * Return the Protein with the longest sequence in this collection.
-     * 
+     *
      * @return Protein with the longest sequence in this collection
      */
     public Protein getLongest() {
         return longest;
     }
+
     /**
      * Return the Protein with the shortest sequence in this collection.
-     * 
+     *
      * @return Protein with the shortest sequence in this collection
      */
     public Protein getShortest() {
         return shortest;
     }
+
     /**
      * Convert a FASTA formatted file to a collections of Protein instances.
      *
@@ -93,7 +106,7 @@ public class ProteinCollection {
         sequence = "";
         // reader is initial not in a sequence
         state = OUTSIDE_SEQUENCE;
-        
+
         // try to read file
         try {
             // open scanner as file reader
@@ -112,6 +125,8 @@ public class ProteinCollection {
                     this.updateExtrema(newProtein);
                     // add current sequence to protein list
                     proteinList.add(newProtein);
+                    // update amino acid freqs
+                    this.computeAminoAcidFreq(newProtein);
                 // if new line starts with greater-than symbol
                 } else if (newline.charAt(0) == '>') {
                     // change state to inside sequence
@@ -129,6 +144,15 @@ public class ProteinCollection {
                 }
             }
             
+            System.out.println(Arrays.toString(this.aminoAcidFreq));
+            
+            int sum = 0;
+            
+            for(int i = 0; i < this.aminoAcidFreq.length; i++)
+                sum += this.aminoAcidFreq[i];
+            
+            System.out.println(sum);
+
             // close file reader
             fileReader.close();
             // return protein list
@@ -141,10 +165,11 @@ public class ProteinCollection {
         // return null by default
         return null;
     }
+
     /**
-     * This method find the protein with the shortest sequence and the protein 
+     * This method find the protein with the shortest sequence and the protein
      * with the longest sequence in this collection.
-     * 
+     *
      * @param p new protein
      */
     private void updateExtrema(Protein p) {
@@ -152,7 +177,7 @@ public class ProteinCollection {
         if (this.shortest == null) {
             // let p be the shortest protein
             this.shortest = p;
-        // if p sequence is shorter than shortest sequence
+            // if p sequence is shorter than shortest sequence
         } else if (p.getSequence().length() < this.shortest.getSequence().length()) {
             // let p be the shortest protein
             this.shortest = p;
@@ -161,12 +186,33 @@ public class ProteinCollection {
         if (this.longest == null) {
             // let p be the longest protein
             this.longest = p;
-        // if p sequence is longer than longer sequence            
+            // if p sequence is longer than longer sequence            
         } else if (p.getSequence().length() > this.longest.getSequence().length()) {
-           // let p be the longest protein
+            // let p be the longest protein
             this.longest = p;
         }
 
     }
 
+    private void computeAminoAcidFreq(Protein p) {
+
+        String s;
+        char c;
+
+        s = p.getSequence();
+
+        for (int i = 0; i < s.length(); i++) {
+            
+            c = s.charAt(i);
+            
+            for(int j = 0; j < this.CODES.length; j++) {
+                if(c == this.CODES[j]) {
+                    this.aminoAcidFreq[j] += 1;
+                }
+            }
+        }
+
+    }
+
 }
+ 
