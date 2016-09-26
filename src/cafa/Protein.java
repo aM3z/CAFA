@@ -24,39 +24,71 @@
 package cafa;
 
 /**
- *
+ * Represents a protein.
+ * 
  * @author Miguel Amezola <amezolma@plu.edu>
  */
 public class Protein {
+    
     // UniProtKB Accession
     private String accession;
     // Sequence
     private String sequence;
-
+    
+    /**
+     * Creates a new protein.
+     * 
+     * @param accession UniProtKB Accession
+     * @param sequence Sequence of amino acids in this protein
+     */
     public Protein(String accession, String sequence) {
         this.accession = accession;
         this.sequence = sequence;
     }
-
+    
+    /**
+     * Return accession.
+     * 
+     * @return accession
+     */
     public String getAccession() {
         return accession;
     }
-
+    
+    /**
+     * Set accession.
+     * 
+     * @param accession new accession
+     */
     public void setAccession(String accession) {
         this.accession = accession;
     }
-
+    
+    /**
+     * Return sequence.
+     * 
+     * @return sequemce
+     */
     public String getSequence() {
         return sequence;
     }
-
+    
+    /**
+     * Set sequence.
+     * 
+     * @param sequence new sequence
+     */
     public void setSequence(String sequence) {
         this.sequence = sequence;
     }
-
+    
+    /**
+     * Represents this protein as a String in FASTA format.
+     * 
+     * @return String in FASTA format
+     */
     @Override
     public String toString() {
         return ">" + accession + "\n" + sequence + "\n";
-    }
-    
+    }    
 }

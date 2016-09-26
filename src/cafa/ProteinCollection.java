@@ -30,8 +30,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 /**
- * Represents a collection of Protein instances from a common FASTA formatted
- * file.
+ * Represents a collection of proteins. Protein instances originate from a 
+ * common file in FASTA format.
  *
  * @author Miguel Amezola <amezolma@plu.edu>
  */
@@ -50,7 +50,12 @@ public class ProteinCollection {
     private Protein shortest;
     // frequency of each amino acid
     private int[] aminoAcidFreq;
-
+    
+    /**
+     * Creates a new collection of proteins.
+     * 
+     * @param filePath file path to data file in FASTA format
+     */
     public ProteinCollection(String filePath) {
 
         if (!filePath.endsWith(".fasta")) {
