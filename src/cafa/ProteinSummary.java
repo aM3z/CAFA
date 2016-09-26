@@ -27,6 +27,6 @@ package cafa;
  *
  * @author Miguel Amezola <amezolma@plu.edu>
  */
-public class SequenceSummary {
+public class ProteinSummary {
     
 }
