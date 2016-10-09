@@ -32,8 +32,10 @@ import junit.framework.TestCase;
  */
 public class ProteinTest extends TestCase {
     
-    private Protein instance1;
-    
+    private Protein instance1; // large
+    private Protein instance2; // small
+    private Protein instance3; // 1 char sequence
+
     public ProteinTest(String testName) {
         super(testName);
     }
@@ -42,6 +44,8 @@ public class ProteinTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         this.instance1 = new Protein("GQPKAAPSVTLFPPSSEELQANKATLVCLVSDFYPGAVTVAWKADGSPVKVGVETTKPSKQSNNKYAASSYLSLTPEQWKSHRSYSCRVTHEGSTVEKTVAPAECS");
+        this.instance2 = new Protein("ABC");
+        this.instance3 = new Protein("M");
     }
     
     @Override
@@ -65,13 +69,30 @@ public class ProteinTest extends TestCase {
      */
     public void testCountMonograms() {
         System.out.println("countMonograms");
-        Protein instance = this.instance1;
-        // {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'X', '*', '-'};
-        int[] expResult = {11, 0, 3, 2, 7, 2, 5, 2, 0, 9, 6, 0, 3, 9, 4, 2, 15, 9, 0, 11, 2, 4, 0, 0, 0, 0};
-        int[] result = instance.countMonograms();
-        System.out.println("exp: " + Arrays.toString(expResult));
-        System.out.println("res: " + Arrays.toString(result));
-        assertTrue(Arrays.equals(expResult, result));
+        
+        Protein instance;
+        int[] result;
+        
+        // large sequence
+        instance = this.instance1;
+        // {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'X', '*', '-'}
+        int [] expResult1 = {11, 0, 3, 2, 7, 2, 5, 2, 0, 9, 6, 0, 3, 9, 4, 2, 15, 9, 0, 11, 2, 4, 0, 0, 0, 0};
+        result = instance.countMonograms();
+        assertTrue(Arrays.equals(expResult1, result));
+        
+        // small sequence
+        instance = this.instance2;
+        // {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'X', '*', '-'}
+        int [] expResult2 = {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        result = instance.countMonograms();
+        assertTrue(Arrays.equals(expResult2, result));
+        
+        // 1 char sequence
+        instance = this.instance3;
+        // {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'X', '*', '-'}
+        int [] expResult3 = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        result = instance.countMonograms();
+        assertTrue(Arrays.equals(expResult3, result));
     }
     
     /**
@@ -79,11 +100,45 @@ public class ProteinTest extends TestCase {
      */
     public void testCountBigrams() {
         System.out.println("countBigrams");
-        Protein instance = this.instance1;
+        
+        Protein instance;
+        
+        // large sequence
+        instance= this.instance1;
         
         int[] result = instance.countBigrams();
         assertEquals(result.length, 26 * 26);
-        System.out.println(Arrays.toString(result));
+        
+        int countPairs = 0;
+        for(int i = 0; i < result.length; i++)
+            countPairs += result[i];
+        
+        assertEquals(instance.getSequence().length() - 1, countPairs);
+
+        // small sequence
+        instance= this.instance2;
+        
+        result = instance.countBigrams();
+        assertEquals(result.length, 26 * 26);
+        
+        countPairs = 0;
+        for(int i = 0; i < result.length; i++)
+            countPairs += result[i];
+        
+        assertEquals(instance.getSequence().length() - 1, countPairs);
+        
+        // 1 char sequence
+        instance= this.instance3;
+        
+        result = instance.countBigrams();
+        assertEquals(result.length, 26 * 26);
+        
+        countPairs = 0;
+        for(int i = 0; i < result.length; i++)
+            countPairs += result[i];
+        
+        assertEquals(instance.getSequence().length() - 1, countPairs);        
+        
     }
     /**
      * Test of toString method, of class Protein.

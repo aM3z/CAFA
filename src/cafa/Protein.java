@@ -115,7 +115,7 @@ public class Protein {
             for(int j = 0; j < this.CODES.length; j++)
                 for(int k = 0; k < this.CODES.length; k++)                
                     if(this.sequence.charAt(i) == this.CODES[j] && this.sequence.charAt(i + 1) == this.CODES[k])
-                        count[j * 20 + k] += 1;        
+                        count[j * this.CODES.length + k] += 1;        
         
         return count;
     }
