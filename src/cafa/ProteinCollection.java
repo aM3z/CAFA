@@ -49,7 +49,7 @@ public class ProteinCollection {
     // protein with the shortest sequence
     private Protein shortest;
     // frequency of each amino acid
-    private int[] aminoAcidFreq;
+    private int[] firstOrderFreqs;
     
     /**
      * Creates a new collection of proteins.
@@ -64,11 +64,11 @@ public class ProteinCollection {
         File f = new File(filePath);
         this.longest = null;
         this.shortest = null;
-        this.aminoAcidFreq = new int[this.CODES.length];
+        this.firstOrderFreqs = new int[this.CODES.length];
         this.proteins = this.loadFile(f);
                 
         // for(int i = 0; i < this.CODES.length; i++)
-        //    this.aminoAcidFreq[i] = 0;
+        //    this.firstOrderFreqs[i] = 0;
     }
 
     /**
@@ -88,7 +88,7 @@ public class ProteinCollection {
     public Protein getLongest() {
         return longest;
     }
-
+    
     /**
      * Return the Protein with the shortest sequence in this collection.
      *
@@ -97,7 +97,22 @@ public class ProteinCollection {
     public Protein getShortest() {
         return shortest;
     }
+    
+    public double [] firstOrderProbabilites() {
+        
+        double [] probabilities = new double[this.firstOrderFreqs.length];
 
+        long totalFreqs = 0;
+        
+        for(int i = 0; i < this.firstOrderFreqs.length; i++)
+            totalFreqs += this.firstOrderFreqs[i];
+        
+        for(int i = 0; i < this.firstOrderFreqs.length; i++)
+            probabilities[i] = (double) this.firstOrderFreqs[i] / totalFreqs;
+        
+        return probabilities;
+    }
+    
     /**
      * Convert a FASTA formatted file to a collections of Protein instances.
      *
@@ -149,7 +164,7 @@ public class ProteinCollection {
                     // add current sequence to protein list
                     proteinList.add(newProtein);
                     // update amino acid freqs
-                    this.computeAminoAcidFreq(newProtein);
+                    this.computeFirstOrderFreq(newProtein);
                 // if new line starts with greater-than symbol
                 } else if (newline.charAt(0) == '>') {
                     // change state to inside sequence
@@ -167,12 +182,12 @@ public class ProteinCollection {
                 }
             }
             
-            System.out.println(Arrays.toString(this.aminoAcidFreq));
+            System.out.println(Arrays.toString(this.firstOrderFreqs));
             
             int sum = 0;
             
-            for(int i = 0; i < this.aminoAcidFreq.length; i++)
-                sum += this.aminoAcidFreq[i];
+            for(int i = 0; i < this.firstOrderFreqs.length; i++)
+                sum += this.firstOrderFreqs[i];
             
             System.out.println(sum);
 
@@ -217,7 +232,7 @@ public class ProteinCollection {
 
     }
 
-    private void computeAminoAcidFreq(Protein p) {
+    private void computeFirstOrderFreq(Protein p) {
 
         String s;
         char c;
@@ -230,7 +245,7 @@ public class ProteinCollection {
             
             for(int j = 0; j < this.CODES.length; j++) {
                 if(c == this.CODES[j]) {
-                    this.aminoAcidFreq[j] += 1;
+                    this.firstOrderFreqs[j] += 1;
                 }
             }
         }

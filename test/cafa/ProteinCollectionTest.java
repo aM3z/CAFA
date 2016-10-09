@@ -8,6 +8,7 @@ package cafa;
 import cafa.Protein;
 import cafa.ProteinCollection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,11 +22,14 @@ import static org.junit.Assert.*;
  */
 public class ProteinCollectionTest {
 
+    // instantiate
+    private ProteinCollection instance;
+    
     public ProteinCollectionTest() {
     }
 
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() {    
     }
 
     @AfterClass
@@ -34,6 +38,7 @@ public class ProteinCollectionTest {
 
     @Before
     public void setUp() {
+        this.instance = new ProteinCollection("CAFATrainingData/GO/go_sequence.fasta");
     }
 
     @After
@@ -47,8 +52,6 @@ public class ProteinCollectionTest {
     public void testConstructor() {
         // print label
         System.out.println("ProteinCollection(String filePath)\n");
-        // instantiate
-        ProteinCollection instance = new ProteinCollection("CAFATrainingData/GO/go_sequence.fasta");
 
         ArrayList<Protein> result = instance.getProteins();
 
@@ -91,13 +94,16 @@ public class ProteinCollectionTest {
     /**
      * Test of setProteins method, of class ProteinGroup.
      */
-    // @Test
-    // public void testSetProteins() {
-    // System.out.println("setProteins");
-    // ArrayList<String> proteins = null;
-    // ProteinCollection instance = new ProteinCollection();
-    // instance.setProteins(proteins);
-    // TODO review the generated test code and remove the default call to fail.
-    // fail("The test case is a prototype.");
-    // }
+    @Test
+    public void testFirstOrderProbabilites() {
+        
+        double [] result = instance.firstOrderProbabilites();
+        double total = 0;
+        
+        for(int i = 0; i < result.length; i++)
+            total += result[i];
+        
+        assertEquals(1.0, total, 0.00000001);
+        
+    }
 }

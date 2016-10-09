@@ -29,12 +29,27 @@ package cafa;
  * @author Miguel Amezola <amezolma@plu.edu>
  */
 public class Protein {
-    
+  
+    // FASTA codes
+    private final char[] CODES = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'X', '*', '-'};
+ 
     // UniProtKB Accession
     private String accession;
     // Sequence
     private String sequence;
     
+    private int [] firstOrderFreqs;
+    private int [][] secondOrderFreqs;    
+
+    /**
+     * Creates a new protein.
+     * 
+     * @param sequence Sequence of amino acids in this protein
+     */
+    public Protein(String sequence) {
+        this.accession = "";
+        this.sequence = sequence;
+    }    
     /**
      * Creates a new protein.
      * 
@@ -80,6 +95,17 @@ public class Protein {
      */
     public void setSequence(String sequence) {
         this.sequence = sequence;
+    }
+    
+    public int [] firstOrderFreqs() {
+        int [] freqs = new int[this.CODES.length];
+        
+        for(int i = 0; i < this.sequence.length(); i++)
+            for(int j = 0; j < this.CODES.length; j++)
+                if(this.sequence.charAt(i) == this.CODES[j])
+                    freqs[j] += 1;
+                            
+        return freqs;
     }
     
     /**
