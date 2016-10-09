@@ -97,15 +97,27 @@ public class Protein {
         this.sequence = sequence;
     }
     
-    public int [] firstOrderFreqs() {
-        int [] freqs = new int[this.CODES.length];
+    public int [] countMonograms() {
+        int [] count = new int[this.CODES.length];
         
         for(int i = 0; i < this.sequence.length(); i++)
             for(int j = 0; j < this.CODES.length; j++)
                 if(this.sequence.charAt(i) == this.CODES[j])
-                    freqs[j] += 1;
+                    count[j] += 1;
                             
-        return freqs;
+        return count;
+    }
+    
+    public int[] countBigrams() {
+        int [] count = new int[this.CODES.length * this.CODES.length];
+        
+        for(int i = 0; i < this.sequence.length() - 1; i++)
+            for(int j = 0; j < this.CODES.length; j++)
+                for(int k = 0; k < this.CODES.length; k++)                
+                    if(this.sequence.charAt(i) == this.CODES[j] && this.sequence.charAt(i + 1) == this.CODES[k])
+                        count[j * 20 + k] += 1;        
+        
+        return count;
     }
     
     /**

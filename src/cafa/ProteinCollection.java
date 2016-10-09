@@ -68,7 +68,7 @@ public class ProteinCollection {
         this.proteins = this.loadFile(f);
                 
         // for(int i = 0; i < this.CODES.length; i++)
-        //    this.firstOrderFreqs[i] = 0;
+        //    this.countMonograms[i] = 0;
     }
 
     /**

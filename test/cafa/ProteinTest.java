@@ -61,19 +61,30 @@ public class ProteinTest extends TestCase {
 
 
     /**
-     * Test of firstOrderFreqs method, of class Protein.
+     * Test of countMonograms method, of class Protein.
      */
-    public void testFirstOrderFreqs() {
-        System.out.println("firstOrderFreqs");
+    public void testCountMonograms() {
+        System.out.println("countMonograms");
         Protein instance = this.instance1;
         // {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'X', '*', '-'};
         int[] expResult = {11, 0, 3, 2, 7, 2, 5, 2, 0, 9, 6, 0, 3, 9, 4, 2, 15, 9, 0, 11, 2, 4, 0, 0, 0, 0};
-        int[] result = instance.firstOrderFreqs();
+        int[] result = instance.countMonograms();
         System.out.println("exp: " + Arrays.toString(expResult));
         System.out.println("res: " + Arrays.toString(result));
         assertTrue(Arrays.equals(expResult, result));
     }
-
+    
+    /**
+     * Test of countBigrams method, of class Protein.
+     */
+    public void testCountBigrams() {
+        System.out.println("countBigrams");
+        Protein instance = this.instance1;
+        
+        int[] result = instance.countBigrams();
+        assertEquals(result.length, 26 * 26);
+        System.out.println(Arrays.toString(result));
+    }
     /**
      * Test of toString method, of class Protein.
      */
