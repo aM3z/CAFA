@@ -97,17 +97,64 @@ public class Protein {
         this.sequence = sequence;
     }
     
+    /**
+     * Counts the frequency of each possible monogram in this protein's 
+     * sequence. Define monogram as a single residue code in a protein sequence.
+     * 
+     * @return frequency distribution
+     */
     public int [] countMonograms() {
-        int [] count = new int[this.CODES.length];
-        
+        // each monogram will have its own entry in this array
+        int [] count;
+        // this array has the same length as the codes array
+        count = new int[this.CODES.length];
+        // for each residue in this protein's sequence
         for(int i = 0; i < this.sequence.length(); i++)
+            // for each code
             for(int j = 0; j < this.CODES.length; j++)
+                // if the current residue has a code then increment the
+                // respective count
                 if(this.sequence.charAt(i) == this.CODES[j])
                     count[j] += 1;
                             
         return count;
     }
     
+    /**
+     * Counts the frequency of each possible bigram in this protein's sequence.
+     * Define bigram as a pair of consecutive residue codes in a protein 
+     * sequence. Assume residue order is not commutative such that RR' does not
+     * equal R'R for arbitrary residues R and R' in the sequence. Thus, there 
+     * are 26 * 26 = 676 permutations with repetition possible since there are 
+     * 26 distinct residue codes.
+     * 
+     * @return frequency distribution
+     */    
+    public int[] countBigrams() {
+        // each bigram will have its own entry in this array
+        int [] count;
+        // we expect (number of codes * number of codes) unique bigrams
+        count = new int[this.CODES.length * this.CODES.length];
+        // for each residue in this protein sequence before the very last one
+        for(int i = 0; i < this.sequence.length() - 1; i++)
+            // find the code indices 
+            for(int j = 0; j < this.CODES.length; j++)
+                for(int k = 0; k < this.CODES.length; k++)
+                    // get the current residue code index j
+                    // get the next residue's code index k
+                    // increment the count for bigram count index i * (number of codes) + k
+                    if(this.sequence.charAt(i) == this.CODES[j] && this.sequence.charAt(i + 1) == this.CODES[k])
+                        count[j * this.CODES.length + k] += 1;        
+        
+        return count;
+    }
+    
+    /**
+     * Returns the probability density of all possible monograms in this 
+     * protein's sequence.
+     * 
+     * @return monogram probability density
+     */
     public double [] monogramDensity() {
 
         int [] monograms;
@@ -126,19 +173,7 @@ public class Protein {
         
         return probabilities;
     }
-    
-    public int[] countBigrams() {
-        int [] count = new int[this.CODES.length * this.CODES.length];
         
-        for(int i = 0; i < this.sequence.length() - 1; i++)
-            for(int j = 0; j < this.CODES.length; j++)
-                for(int k = 0; k < this.CODES.length; k++)                
-                    if(this.sequence.charAt(i) == this.CODES[j] && this.sequence.charAt(i + 1) == this.CODES[k])
-                        count[j * this.CODES.length + k] += 1;        
-        
-        return count;
-    }
-    
     /**
      * Represents this protein as a String in FASTA format.
      * 
