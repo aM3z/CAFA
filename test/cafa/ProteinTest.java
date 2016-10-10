@@ -94,6 +94,28 @@ public class ProteinTest extends TestCase {
         result = instance.countMonograms();
         assertTrue(Arrays.equals(expResult3, result));
     }
+
+  /**
+     * Test of monogramDensity method, of class Protein.
+     */
+    public void testMonogramDensity() {
+
+        System.out.println("monogramDensity");
+        
+        Protein instance;
+        double [] dens;
+        double totalDens;
+        
+        // large sequence
+        instance= this.instance1;
+        dens = instance.monogramDensity();        
+        totalDens = 0.0;
+        
+        for(int i = 0; i < dens.length; i++)
+            totalDens += dens[i];
+
+        assertEquals(totalDens, 1.0, 0.00000001);
+    }
     
     /**
      * Test of countBigrams method, of class Protein.

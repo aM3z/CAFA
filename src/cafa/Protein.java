@@ -108,6 +108,25 @@ public class Protein {
         return count;
     }
     
+    public double [] monogramDensity() {
+
+        int [] monograms;
+        int totalMonograms;
+        double [] probabilities;
+
+        monograms = this.countMonograms();
+        totalMonograms = 0;
+        probabilities = new double[monograms.length];
+        
+        for(int i = 0; i < monograms.length; i++)
+            totalMonograms += monograms[i];
+        
+        for(int j = 0; j < monograms.length; j++)
+            probabilities[j] = (double) monograms[j] / totalMonograms;
+        
+        return probabilities;
+    }
+    
     public int[] countBigrams() {
         int [] count = new int[this.CODES.length * this.CODES.length];
         
