@@ -31,7 +31,13 @@ package cafa;
 public class Protein {
   
     // FASTA codes
-    private final char[] CODES = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y', 'Z', 'X', '*', '-'};
+    private final char[] CODES = {
+        'A', 'B', 'C', 'D', 'E', 'F', 
+        'G', 'H', 'I', 'K', 'L', 'M', 
+        'N', 'P', 'Q', 'R', 'S', 'T', 
+        'U', 'V', 'W', 'Y', 'Z', 'X', 
+        '*', '-'
+    };
  
     // UniProtKB Accession
     private String accession;
@@ -142,8 +148,10 @@ public class Protein {
                 for(int k = 0; k < this.CODES.length; k++)
                     // get the current residue code index j
                     // get the next residue's code index k
-                    // increment the count for bigram count index i * (number of codes) + k
-                    if(this.sequence.charAt(i) == this.CODES[j] && this.sequence.charAt(i + 1) == this.CODES[k])
+                    // increment the count for bigram count index equal to
+                    // i * (number of codes) + k
+                    if(this.sequence.charAt(i) == this.CODES[j] 
+                            && this.sequence.charAt(i + 1) == this.CODES[k])
                         count[j * this.CODES.length + k] += 1;        
         
         return count;
@@ -156,18 +164,24 @@ public class Protein {
      * @return monogram probability density
      */
     public double [] monogramDensity() {
-
-        int [] monograms;
-        int totalMonograms;
+        // each probability is equal to the quotient of the corresponding 
+        // monogram frequency and the summation of all monogram frequencies
         double [] probabilities;
-
+        // frequency distribution of monograms
+        int [] monograms;
+        // summation of all monogram frequencies
+        int totalMonograms;
+        // get monogram freqeuncy distribution
         monograms = this.countMonograms();
+        // initialize summation of the frequencies 
         totalMonograms = 0;
+        // expect as many probabilities there are frequencies
         probabilities = new double[monograms.length];
-        
+        // compute the summation of the frequencies
         for(int i = 0; i < monograms.length; i++)
             totalMonograms += monograms[i];
-        
+        // divide each freqency by the summation of the frequencies and store 
+        // the quotient as the frequency for the correspoding monogram
         for(int j = 0; j < monograms.length; j++)
             probabilities[j] = (double) monograms[j] / totalMonograms;
         
