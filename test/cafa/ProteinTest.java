@@ -95,7 +95,7 @@ public class ProteinTest extends TestCase {
         assertTrue(Arrays.equals(expResult3, result));
     }
 
-  /**
+    /**
      * Test of monogramDensity method, of class Protein.
      */
     public void testMonogramDensity() {
