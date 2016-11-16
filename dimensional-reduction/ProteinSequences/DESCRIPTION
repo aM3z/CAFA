@@ -1,0 +1,11 @@
+Package: ProteinSequences
+Title: Functions for Analyzing the Permutations of Amino Acid Residues in Protein Sequences.
+Version: 0.0.0.9000
+Authors@R: person("Miguel", "Amezola", email = "amezolma@plu.edu", role = c("aut", "cre"))
+Description: There is a function(s) that inserts all distinct permutations of sequences of 3, 4, 5, 6, 7, 8, 9, and 10 amino acid residues along with their frequencies into unique MongoDB files for each length. For all permutations in the files of a given MongoDB database, there is a function that assigns to each distinct permutation a unique integer 0, 1, 2, ..., n - 1 in descending frequency order, where n is the number of permutations in the file, and call it the "permutation index." There is a function that returns the difference in entropy between two MongoDB files containing aminio acid residue permutations.
+Depends: R (>= 3.2.3)
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports: Biostrings (>= 2.38.4)
+RoxygenNote: 5.0.1.9000
